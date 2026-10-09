@@ -1,0 +1,27 @@
+# Locally generated runs and figures
+results/
+results_1d1v/
+figures_post/
+
+# Python and tests
+__pycache__/
+.pytest_cache/
+*.py[cod]
+.coverage
+htmlcov/
+.tox/
+.venv/
+venv/
+env/
+
+# Spyder/Jupyter, editor settings
+.spyproject/
+.ipynb_checkpoints/
+.idea/
+.vscode/
+
+# System, temporary files and logs
+.DS_Store
+Thumbs.db
+*.log
+*.tmp

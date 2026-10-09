@@ -1,0 +1,7 @@
+# Install versions matching the original NSCC environment logs for exact reproducibility.
+numpy
+matplotlib
+psutil
+ipython
+qiskit
+qiskit-aer
