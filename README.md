@@ -1,8 +1,8 @@
 # Schrödingerised circuits for 1D1V Vlasov transport
 
-This repository contains the **1D1V portion only** of the research code accompanying *Quantum Circuits for Variable-Coefficient Vlasov Dynamics via Schrödingerisation*. The 3D3V anharmonic Penning implementation will be released separately/later.
+This repository contains the **1D1V portion only** of the research code accompanying *Quantum Circuits for Variable-Coefficient Vlasov Dynamics via Schrödingerisation*.
 
-It implements a prescribed-field 1D1V Vlasov benchmark with coherent velocity-controlled streaming, cubic-field reversible fixed-point arithmetic, Strang splitting, auxiliary Schrödingerisation register and recovery, and a **scheme-matched classical FFT reference**. This is research/benchmark code, not a production plasma solver or a demonstration of quantum computational advantage.
+It implements a prescribed-field 1D1V Vlasov benchmark with coherent velocity-controlled streaming, cubic-field reversible fixed-point arithmetic, Strang splitting, auxiliary Schrödingerisation register and recovery, and a **scheme-matched classical FFT reference**. This is research/benchmark code, not a production plasma solver, or a demonstration of quantum advantage.
 
 ## Directory guide
 
@@ -65,12 +65,7 @@ Open `schro_1d1v_grid_sensitivity_spyder.py`, set `X_GRID_MODE = "cell"`, and pr
 
 1. **Initial grid / field grid:** The T1 production driver samples the initial state at `x_j = -Lx/2 + (j+1/2)*dx`, while its coherent field circuit uses the centred integer `c(j)=j-Nx/2`, corresponding to `x_tilde_j = x_j - dx/2`. The classical reference uses **that same nodal fixed-point field**. The Appendix C script varies the initial grid but leaves the field unchanged.
 2. **Coarse-grid cubic coefficient:** The production driver has `s=6` fixed in source. For the original `nx=5`, `Lx=6`, `a0=kappa=1` benchmark, `alpha_fp=12` and `beta_fp=0`: the *implemented discrete force is linear*, despite the inclusion of cubic-field arithmetic in the compiled circuit. The `nx=3` Appendix C case instead has `alpha_fp=48`, `beta_fp=-27`, retaining a nonzero cubic contribution. Results validate the **implemented discrete circuit** and MPS cost, not continuum nonlinear dynamics at all resolutions.
-3. **Error definition:** `compare_utils.py` computes `||fQ/||fQ||_2 - fC/||fC||_2||_2`, with independent L2 normalisation. Saved plot arrays `fQ` and `fC` are instead separately unit-mass normalised. These two comparisons should not be confused.
-4. **Resources:** `ft_resources.py` counts decomposed CX and rotation-like (`u`, `p`, `rz`, `cp`) operations. The estimated T-count is a rotation-synthesis **proxy**, not an exact fault-tolerant Clifford+T gate count.
-5. **Computational scope:** full Qiskit Aer matrix-product-state verification may be very costly even when the physical phase-space grid is small. Classical solver runtimes are not the same as MPS emulation runtimes. Some configurations require NSCC-scale compute.
+3. **Resources:** `ft_resources.py` counts decomposed CX and rotation-like (`u`, `p`, `rz`, `cp`) operations. The estimated T-count is a rotation-synthesis **proxy**, not an exact fault-tolerant Clifford+T gate count.
+4. **Computational scope:** full Qiskit Aer matrix-product-state verification may be very costly even when the physical phase-space grid is small. Classical solver runtimes are not the same as MPS emulation runtimes.
 
-## Tests and release notes
 
-Run `python -m pytest -q tests` to check classical-grid offsets, mass preservation, auxiliary profile validity and the error metric. **These are not substitutes for end-to-end quantum circuit tests**. The optional `python test_loaders.py` requires a Qiskit-compatible environment. The primary evolution/circuit modules are preserved from the previously audited 1D1V T1 package; the grid-sensitivity script and plotting/check scripts are supplied separately, and documentation is expanded.
-
-**License:** No software license is assigned in this provisional archive. The project authors should select and add a top-level `LICENSE` before publishing. See [docs/RELEASE_CHECKLIST.md](docs/RELEASE_CHECKLIST.md).
